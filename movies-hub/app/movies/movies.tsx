@@ -25,14 +25,21 @@ interface MovieAPIResp {
     total_result: number;
 }
 
-const getMovies = async () => {
+interface Category {
+    type: string;
+}
+
+const getMovies = async (type: string) => {
     try {
         const api_key = process.env.NEXT_PUBLIC_API_KEY;
-        const res = await fetch(
-            `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}`
-        );
+        const url = `https://api.themoviedb.org/3/movie/${type}?api_key=${api_key}`;
+        const res = await fetch(url, {
+            next: {
+                revalidate: 3600, // Revalidate every hour
+            },
+        });
 
-        if (!res) {
+        if (!res.ok) {
             throw new Error("Failed to fetch movies");
         }
 
@@ -44,11 +51,11 @@ const getMovies = async () => {
     }
 };
 
-const Movies = async () => {
-    const result = await getMovies();
+const Movies = async ({ type }: Category) => {
+    const result = await getMovies(type);
     const movieResp: MovieAPIResp = result;
     const movies: Movie[] = movieResp.results;
-    //console.log(movies);
+    console.log(movies);
 
     return (
         <main className="p-8">
