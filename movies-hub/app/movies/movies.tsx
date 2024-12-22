@@ -55,28 +55,30 @@ const Movies = async ({ type }: Category) => {
     const result = await getMovies(type);
     const movieResp: MovieAPIResp = result;
     const movies: Movie[] = movieResp.results;
+    const typeUpper = type.toUpperCase().charAt(0) + type.slice(1);
+    const category = typeUpper.split("_").join(" ");
     //console.log(movies);
 
     return (
         <main className="p-8">
-            <h1 className="text-3xl font-bold mb-6">Popular Movies</h1>
+            <h1 className="text-3xl font-bold mb-6">{category}</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8">
                 {movies.map((movie) => (
                     <div
                         key={movie.id}
-                        className="border rounded-lg shadow-lg overflow-hidden"
+                        className="rounded-lg shadow-lg overflow-hidden"
                     >
                         <img
                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                             alt={movie.title}
-                            className="w-40 h-64 mr-auto ml-auto"
+                            className="mr-auto ml-auto"
                         ></img>
                         <div className="p-4">
-                            <h2 className="text-xl font-semibold mb-2">
+                            <h2 className="text-center text-xl font-semibold mb-2">
                                 {movie.title}
                             </h2>
-                            <p className="text-gray-500 mb-2">
+                            {/* <p className="text-gray-500 mb-2">
                                 Release Date:
                                 {new Date(
                                     movie.release_date
@@ -89,7 +91,7 @@ const Movies = async ({ type }: Category) => {
                                 <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
                                     Rating: {movie.vote_average.toFixed(1)}/10
                                 </span>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 ))}
