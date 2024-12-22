@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Navbar() {
     const [searchQuery, setSearchQuery] = useState("");
 
     const categories = [
-        { name: "Now Playing", path: "/" },
-        { name: "Top Rated", path: "/top-rated" },
-        { name: "Upcoming", path: "/upcoming" },
-        { name: "Popular", path: "/popular" },
+        { name: "Now Playing", type: "now_playing" },
+        { name: "Top Rated", type: "top_rated" },
+        { name: "Upcoming", type: "upcoming" },
+        { name: "Popular", type: "popular" },
     ];
 
     const handleSearch = (e) => {
@@ -29,13 +30,13 @@ export default function Navbar() {
                         <div className="overflow-x-auto scrollbar-hide">
                             <div className="flex space-x-10">
                                 {categories.map((category) => (
-                                    <a
-                                        href={category.path}
-                                        key={category.path}
+                                    <Link
+                                        href={`/?type=${category.type}`}
+                                        key={category.type}
                                         className="text-lg whitespace-nowrap hover:text-blue-400 transition-colors px-2 py-1 rounded-md hover:bg-slate-800"
                                     >
                                         {category.name}
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         </div>
