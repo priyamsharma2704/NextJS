@@ -55,7 +55,7 @@ const Movies = async ({ type }: Category) => {
     const result = await getMovies(type);
     const movieResp: MovieAPIResp = result;
     const movies: Movie[] = movieResp.results;
-    console.log(movies);
+    //console.log(movies);
 
     return (
         <main className="p-8">
