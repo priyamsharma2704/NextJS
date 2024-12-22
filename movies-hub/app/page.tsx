@@ -2,13 +2,15 @@ import Navbar from "./navbar";
 import Movies from "./movies/movies";
 
 interface SearchParams {
-    type?: string;
+    searchParams: {
+        type?: string;
+    };
 }
 
 export default function Home({ searchParams }: SearchParams) {
     const type = searchParams.type?.split("-").join("_");
     const category = type || "popular";
-
+    console.log(type);
     return (
         <>
             <Navbar></Navbar>
