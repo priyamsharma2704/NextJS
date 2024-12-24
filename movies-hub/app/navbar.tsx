@@ -12,7 +12,7 @@ export default function Navbar() {
         { name: "Popular", type: "popular" },
     ];
 
-    const handleSearch = (e) => {
+    const handleSearch = (e:any) => {
         e.preventDefault();
         console.log("searching...");
     };
