@@ -73,7 +73,10 @@ const Movies = async ({ type }: Category) => {
                         key={movie.id}
                         className="rounded-lg shadow-lg overflow-hidden"
                     >
-                        <MovieTile movieData={movie}></MovieTile>
+                        <MovieTile
+                            movieData={movie}
+                            category={category}
+                        ></MovieTile>
                         {/* <p className="text-gray-500 mb-2">
                                 Release Date:
                                 {new Date(

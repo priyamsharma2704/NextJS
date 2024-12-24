@@ -13,13 +13,14 @@ interface Movie {
 
 interface MovieTileProps {
     movieData: Movie;
+    category: string;
 }
-const MovieTile = ({ movieData }: MovieTileProps) => {
+const MovieTile = ({ movieData, category }: MovieTileProps) => {
     return (
         <Link
             href={{
                 pathname: "/movie-details",
-                query: { data: JSON.stringify(movieData) },
+                query: { data: JSON.stringify(movieData), category: category },
             }}
         >
             <img

@@ -1,6 +1,7 @@
 "use client";
 import Navbar from "../navbar";
 import { useSearchParams } from "next/navigation";
+
 interface Movie {
     title: string;
     id: number;
@@ -23,6 +24,7 @@ const MovieDetails = () => {
     };
     const searchParams = useSearchParams();
     const data = searchParams.get("data");
+    const category = searchParams.get("category");
     if (data != null) {
         movieData = JSON.parse(data);
         console.log(movieData);
@@ -41,15 +43,25 @@ const MovieDetails = () => {
                 </div>
                 <div className="my-10">
                     <div className="text-3xl font-bold">{movieData.title}</div>
-                    <br></br>
+                    <br />
                     <div className="text-2xl">
                         Release Date: {movieData.release_date}
                     </div>
-                    <br></br>
+                    <br />
                     <div className="mr-10">
                         <span className="text-2xl"> {movieData.overview}</span>
                     </div>
                     <div>Votes: {movieData.vote_average}</div>
+                    <br />
+
+                    <button
+                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => {
+                            window.history.back();
+                        }}
+                    >
+                        Back
+                    </button>
                 </div>
             </div>
         </div>
