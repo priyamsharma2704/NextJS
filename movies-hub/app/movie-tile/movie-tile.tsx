@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import Link from "next/link";
 
 interface Movie {
     title: string;
@@ -10,12 +10,18 @@ interface Movie {
     overview: string;
     vote_average: number;
 }
+
 interface MovieTileProps {
     movieData: Movie;
 }
 const MovieTile = ({ movieData }: MovieTileProps) => {
     return (
-        <>
+        <Link
+            href={{
+                pathname: "/movie-details",
+                query: { data: JSON.stringify(movieData) },
+            }}
+        >
             <img
                 src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                 alt={movieData.title}
@@ -26,7 +32,7 @@ const MovieTile = ({ movieData }: MovieTileProps) => {
                     {movieData.title}
                 </h2>
             </div>
-        </>
+        </Link>
     );
 };
 
