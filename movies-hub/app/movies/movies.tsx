@@ -1,4 +1,5 @@
 import React from "react";
+import MovieTile from "../movie-tile/movie-tile";
 //TODO:
 /*  To extend this task, you could:
 
@@ -7,6 +8,9 @@ import React from "react";
     Add movie details page using dynamic routes
     Add client-side interactivity like favoriting movies
     Implement filters by genre or release date
+
+    Genre List API
+    https://developer.themoviedb.org/reference/genre-movie-list
 */
 interface Movie {
     title: string;
@@ -69,16 +73,8 @@ const Movies = async ({ type }: Category) => {
                         key={movie.id}
                         className="rounded-lg shadow-lg overflow-hidden"
                     >
-                        <img
-                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                            alt={movie.title}
-                            className="mr-auto ml-auto"
-                        ></img>
-                        <div className="p-4">
-                            <h2 className="text-center text-xl font-semibold mb-2">
-                                {movie.title}
-                            </h2>
-                            {/* <p className="text-gray-500 mb-2">
+                        <MovieTile movieData={movie}></MovieTile>
+                        {/* <p className="text-gray-500 mb-2">
                                 Release Date:
                                 {new Date(
                                     movie.release_date
@@ -92,7 +88,6 @@ const Movies = async ({ type }: Category) => {
                                     Rating: {movie.vote_average.toFixed(1)}/10
                                 </span>
                             </div> */}
-                        </div>
                     </div>
                 ))}
             </div>
