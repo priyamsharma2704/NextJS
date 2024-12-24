@@ -8,14 +8,13 @@ interface Props {
     };
 }
 
-export default function Home({ searchParams }: Props) {
-    const type = searchParams.type?.split("-").join("_");
-    const category = type || "popular";
+export default async function Home({ searchParams }: Props) {
+    const type = searchParams.type?.split("-").join("_") || "popular";
     const pageNum = searchParams.page || 1;
     return (
         <>
             <Navbar></Navbar>
-            <Movies type={category} page={pageNum}></Movies>
+            <Movies type={type} page={pageNum}></Movies>
         </>
     );
 }
