@@ -12,7 +12,7 @@ export default function Navbar() {
         { name: "Popular", type: "popular" },
     ];
 
-    const handleSearch = (e:any) => {
+    const handleSearch = (e: any) => {
         e.preventDefault();
         console.log("searching...");
     };
@@ -31,7 +31,7 @@ export default function Navbar() {
                             <div className="flex space-x-10">
                                 {categories.map((category) => (
                                     <Link
-                                        href={`/?type=${category.type}`}
+                                        href={`?type=${category.type}`}
                                         key={category.type}
                                         className="text-lg whitespace-nowrap hover:text-blue-400 transition-colors px-2 py-1 rounded-md hover:bg-slate-800"
                                     >

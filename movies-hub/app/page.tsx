@@ -1,20 +1,21 @@
 import Navbar from "./navbar";
 import Movies from "./movies/movies";
 
-interface SearchParams {
+interface Props {
     searchParams: {
         type?: string;
+        page?: number;
     };
 }
 
-export default function Home({ searchParams }: SearchParams) {
+export default function Home({ searchParams }: Props) {
     const type = searchParams.type?.split("-").join("_");
     const category = type || "popular";
-    console.log(type);
+    const pageNum = searchParams.page || 1;
     return (
         <>
             <Navbar></Navbar>
-            <Movies type={category}></Movies>
+            <Movies type={category} page={pageNum}></Movies>
         </>
     );
 }

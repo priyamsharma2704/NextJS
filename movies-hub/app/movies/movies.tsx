@@ -1,16 +1,29 @@
 import React from "react";
 import MovieTile from "../movie-tile/movie-tile";
+import Link from "next/link";
 //TODO:
 /*  To extend this task, you could:
 
-    Add pagination
+    //Add pagination
     Implement search functionality
-    Add movie details page using dynamic routes
+    // Add movie details page using dynamic routes
     Add client-side interactivity like favoriting movies
     Implement filters by genre or release date
 
     Genre List API
     https://developer.themoviedb.org/reference/genre-movie-list
+
+    Add to watchlist
+    https://developer.themoviedb.org/reference/account-add-to-watchlist
+
+    Get watchlist
+    https://developer.themoviedb.org/reference/account-watchlist-movies
+
+    Recommendations
+    https://developer.themoviedb.org/reference/movie-recommendations
+    
+    Search movie
+    https://developer.themoviedb.org/reference/search-movie
 */
 interface Movie {
     title: string;
@@ -29,14 +42,15 @@ interface MovieAPIResp {
     total_result: number;
 }
 
-interface Category {
+interface Props {
     type: string;
+    page: number;
 }
 
-const getMovies = async (type: string) => {
+const getMovies = async (type: string, page: number) => {
     try {
         const api_key = process.env.NEXT_PUBLIC_API_KEY;
-        const url = `https://api.themoviedb.org/3/movie/${type}?api_key=${api_key}`;
+        const url = `https://api.themoviedb.org/3/movie/${type}?api_key=${api_key}&page=${page}`;
         const res = await fetch(url, {
             next: {
                 revalidate: 3600, // Revalidate every hour
@@ -48,6 +62,7 @@ const getMovies = async (type: string) => {
         }
 
         const data = await res.json();
+        //console.log(data);
         return data;
     } catch (error) {
         console.log(error);
@@ -55,13 +70,14 @@ const getMovies = async (type: string) => {
     }
 };
 
-const Movies = async ({ type }: Category) => {
-    const result = await getMovies(type);
+const Movies = async ({ type, page }: Props) => {
+    var currPage = page || 1;
+
+    const result = await getMovies(type, currPage);
     const movieResp: MovieAPIResp = result;
     const movies: Movie[] = movieResp.results;
     const typeUpper = type.toUpperCase().charAt(0) + type.slice(1);
     const category = typeUpper.split("_").join(" ");
-    //console.log(movies);
 
     return (
         <main className="p-8">
@@ -77,22 +93,36 @@ const Movies = async ({ type }: Category) => {
                             movieData={movie}
                             category={category}
                         ></MovieTile>
-                        {/* <p className="text-gray-500 mb-2">
-                                Release Date:
-                                {new Date(
-                                    movie.release_date
-                                ).toLocaleDateString()}
-                            </p>
-                            <p className="text-gray-700 line-clamp-3">
-                                {movie.overview}
-                            </p>
-                            <div className="mt-4 flex justify-between item-center">
-                                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                    Rating: {movie.vote_average.toFixed(1)}/10
-                                </span>
-                            </div> */}
                     </div>
                 ))}
+            </div>
+
+            <div className="flex justify-center">
+                <Link
+                    className="px-10"
+                    href={`?type=${type}&page=${movieResp.page - 1}`}
+                >
+                    <button
+                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        disabled={movieResp.page === 1}
+                    >
+                        Previous
+                    </button>
+                </Link>
+                <span className="py-2">
+                    Page {movieResp.page} of {movieResp.total_pages}
+                </span>
+                <Link
+                    className="px-10"
+                    href={`?type=${type}&page=${movieResp.page + 1}`}
+                >
+                    <button
+                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        disabled={movieResp.page === movieResp.total_pages}
+                    >
+                        Next
+                    </button>
+                </Link>
             </div>
         </main>
     );
