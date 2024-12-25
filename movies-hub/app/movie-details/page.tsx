@@ -12,6 +12,20 @@ interface Movie {
     vote_average: number;
 }
 
+const getRecommendations = async (movie_id: number) => {
+    const api = process.env.NEXT_PUBLIC_API_BEARER_KEY;
+    const url = `https://api.themoviedb.org/3/movie/${movie_id}/watch/providers`;
+    console.log(api);
+
+    const resp = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${api}`,
+            Accept: "application/JSON",
+        },
+    });
+    const data = await resp.json();
+    console.log(data);
+};
 const MovieDetails = () => {
     let movieData: Movie = {
         title: "",
@@ -29,6 +43,8 @@ const MovieDetails = () => {
         movieData = JSON.parse(data);
         console.log(movieData);
     }
+
+    const recommendations = getRecommendations(movieData.id);
 
     return (
         <div>
@@ -51,8 +67,13 @@ const MovieDetails = () => {
                     <div className="mr-10">
                         <span className="text-2xl"> {movieData.overview}</span>
                     </div>
-                    <div>Votes: {movieData.vote_average}</div>
                     <br />
+                    <div className="text-2xl">
+                        Votes: {movieData.vote_average}
+                    </div>
+                    <br />
+
+                    <div>Where to watch:</div>
 
                     <button
                         className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -64,6 +85,7 @@ const MovieDetails = () => {
                     </button>
                 </div>
             </div>
+            <div>Recommendations:</div>
         </div>
     );
 };

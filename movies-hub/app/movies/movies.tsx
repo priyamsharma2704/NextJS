@@ -24,6 +24,9 @@ import Link from "next/link";
     
     Search movie
     https://developer.themoviedb.org/reference/search-movie
+
+    WatchProviders
+    https://developer.themoviedb.org/reference/movie-watch-providers
 */
 interface Movie {
     title: string;
