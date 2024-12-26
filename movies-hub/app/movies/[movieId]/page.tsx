@@ -1,5 +1,5 @@
 import React from "react";
-
+import WatchProviders from "@/app/watch-providers/watch-providers";
 interface Movie {
     title: string;
     id: number;
@@ -29,7 +29,6 @@ const MoviePage = async ({ params }: { params: { movieId: number } }) => {
     console.log(params.movieId);
     const movieId = params.movieId;
     const movieData: Movie = await getMovieById(movieId);
-    console.log(movieData);
     return (
         <>
             <div className="grid grid-cols-2 gap-10">
@@ -65,10 +64,8 @@ const MoviePage = async ({ params }: { params: { movieId: number } }) => {
                     </div>
                     <br />
                     <div>
-                        Where to watch:
-                        {/* <WatchProviders
-                            movieId={searchParams.id}
-                        ></WatchProviders> */}
+                        <span className="text-lg">Available on:</span>
+                        <WatchProviders movieId={movieId}></WatchProviders>
                     </div>
                     {/* <Link href="/">
                         <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
