@@ -10,6 +10,7 @@ interface Movie {
     rating: number;
     overview: string;
     vote_average: number;
+    genres: [{ id: number; name: string }];
 }
 
 interface Props {
@@ -29,12 +30,13 @@ const getMovieById = async (id: number) => {
         },
     });
     const data = await resp.json();
-
+    //console.log(data);
     return data;
 };
 
 const MovieDetails = async ({ searchParams }: Props) => {
     const movieData: Movie = await getMovieById(searchParams.id);
+    console.log(movieData);
 
     return (
         <div>
@@ -59,15 +61,20 @@ const MovieDetails = async ({ searchParams }: Props) => {
                     </div>
                     <br />
                     <div className="text-2xl">
+                        |{" "}
+                        {movieData.genres.map((genre) => (
+                            <span> {genre.name} | </span>
+                        ))}
+                    </div>
+                    <br />
+                    <div className="text-2xl">
                         Votes: {movieData.vote_average}
                     </div>
                     <br />
-
                     <div>
                         Where to watch:
                         <WatchProviders></WatchProviders>
                     </div>
-
                     <Link href="/">
                         <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Back
