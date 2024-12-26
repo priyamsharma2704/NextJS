@@ -1,6 +1,6 @@
-//"use client";
 import Navbar from "../navbar";
 import WatchProviders from "../watch-providers/watch-providers";
+import Link from "next/link";
 
 interface Movie {
     title: string;
@@ -65,19 +65,14 @@ const MovieDetails = async ({ searchParams }: Props) => {
 
                     <div>
                         Where to watch:
-                        <div>
-                            <WatchProviders></WatchProviders>
-                        </div>
+                        <WatchProviders></WatchProviders>
                     </div>
 
-                    {/* <button
-                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => {
-                            window.history.back();
-                        }}
-                    >
-                        Back
-                    </button> */}
+                    <Link href="/">
+                        <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Back
+                        </button>
+                    </Link>
                 </div>
             </div>
             <div>Recommendations:</div>

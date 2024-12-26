@@ -13,12 +13,13 @@ interface Movie {
 
 interface MovieTileProps {
     movieData: Movie;
+    category: string;
 }
-const MovieTile = ({ movieData }: MovieTileProps) => {
+const MovieTile = ({ movieData, category }: MovieTileProps) => {
     const movieId = movieData.id;
 
     return (
-        <Link href={`/movie-details/?id=${movieId}`}>
+        <Link href={`/movie-details/?id=${movieId}&type=${category}`}>
             <img
                 src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                 alt={movieData.title}

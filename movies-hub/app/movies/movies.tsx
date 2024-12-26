@@ -65,7 +65,6 @@ const getMovies = async (type: string, page: number) => {
         }
 
         const data = await res.json();
-        //console.log(data);
         return data;
     } catch (error) {
         console.log(error);
@@ -92,7 +91,10 @@ const Movies = async ({ type, page }: Props) => {
                         key={movie.id}
                         className="rounded-lg shadow-lg overflow-hidden"
                     >
-                        <MovieTile movieData={movie}></MovieTile>
+                        <MovieTile
+                            movieData={movie}
+                            category={category}
+                        ></MovieTile>
                     </div>
                 ))}
             </div>
