@@ -92,10 +92,7 @@ const Movies = async ({ type, page }: Props) => {
                         key={movie.id}
                         className="rounded-lg shadow-lg overflow-hidden"
                     >
-                        <MovieTile
-                            movieData={movie}
-                            category={category}
-                        ></MovieTile>
+                        <MovieTile movieData={movie}></MovieTile>
                     </div>
                 ))}
             </div>

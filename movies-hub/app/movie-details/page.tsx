@@ -1,6 +1,6 @@
-"use client";
+//"use client";
 import Navbar from "../navbar";
-import { useSearchParams } from "next/navigation";
+import WatchProviders from "../watch-providers/watch-providers";
 
 interface Movie {
     title: string;
@@ -12,10 +12,15 @@ interface Movie {
     vote_average: number;
 }
 
-const getRecommendations = async (movie_id: number) => {
+interface Props {
+    searchParams: {
+        id: number;
+    };
+}
+
+const getMovieById = async (id: number) => {
     const api = process.env.NEXT_PUBLIC_API_BEARER_KEY;
-    const url = `https://api.themoviedb.org/3/movie/${movie_id}/watch/providers`;
-    console.log(api);
+    const url = `https://api.themoviedb.org/3/movie/${id}`;
 
     const resp = await fetch(url, {
         headers: {
@@ -24,27 +29,12 @@ const getRecommendations = async (movie_id: number) => {
         },
     });
     const data = await resp.json();
-    console.log(data);
-};
-const MovieDetails = () => {
-    let movieData: Movie = {
-        title: "",
-        id: 0,
-        poster_path: "",
-        release_date: "",
-        rating: 0,
-        overview: "",
-        vote_average: 0,
-    };
-    const searchParams = useSearchParams();
-    const data = searchParams.get("data");
-    const category = searchParams.get("category");
-    if (data != null) {
-        movieData = JSON.parse(data);
-        console.log(movieData);
-    }
 
-    const recommendations = getRecommendations(movieData.id);
+    return data;
+};
+
+const MovieDetails = async ({ searchParams }: Props) => {
+    const movieData: Movie = await getMovieById(searchParams.id);
 
     return (
         <div>
@@ -73,16 +63,21 @@ const MovieDetails = () => {
                     </div>
                     <br />
 
-                    <div>Where to watch:</div>
+                    <div>
+                        Where to watch:
+                        <div>
+                            <WatchProviders></WatchProviders>
+                        </div>
+                    </div>
 
-                    <button
+                    {/* <button
                         className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         onClick={() => {
                             window.history.back();
                         }}
                     >
                         Back
-                    </button>
+                    </button> */}
                 </div>
             </div>
             <div>Recommendations:</div>

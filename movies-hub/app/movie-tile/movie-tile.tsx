@@ -1,4 +1,4 @@
-"use client";
+//"use client";
 import Link from "next/link";
 
 interface Movie {
@@ -13,16 +13,12 @@ interface Movie {
 
 interface MovieTileProps {
     movieData: Movie;
-    category: string;
 }
-const MovieTile = ({ movieData, category }: MovieTileProps) => {
+const MovieTile = ({ movieData }: MovieTileProps) => {
+    const movieId = movieData.id;
+
     return (
-        <Link
-            href={{
-                pathname: "/movie-details",
-                query: { data: JSON.stringify(movieData), category: category },
-            }}
-        >
+        <Link href={`/movie-details/?id=${movieId}`}>
             <img
                 src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                 alt={movieData.title}
