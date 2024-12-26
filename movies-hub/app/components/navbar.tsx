@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Navbar() {
     const [searchQuery, setSearchQuery] = useState("");
 
-    const categories = [
+    const categoriesArr = [
         { name: "Now Playing", type: "now_playing" },
         { name: "Top Rated", type: "top_rated" },
         { name: "Upcoming", type: "upcoming" },
@@ -29,9 +29,9 @@ export default function Navbar() {
                         </a>
                         <div className="overflow-x-auto scrollbar-hide">
                             <div className="flex space-x-10">
-                                {categories.map((category) => (
+                                {categoriesArr.map((category) => (
                                     <Link
-                                        href={`?type=${category.type}`}
+                                        href={`/categories/${category.type}`}
                                         key={category.type}
                                         className="text-lg whitespace-nowrap hover:text-blue-400 transition-colors px-2 py-1 rounded-md hover:bg-slate-800"
                                     >

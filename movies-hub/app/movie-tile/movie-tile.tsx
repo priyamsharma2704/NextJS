@@ -19,7 +19,7 @@ const MovieTile = ({ movieData, category }: MovieTileProps) => {
     const movieId = movieData.id;
 
     return (
-        <Link href={`/movie-details/?id=${movieId}&type=${category}`}>
+        <>
             <img
                 src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
                 alt={movieData.title}
@@ -30,7 +30,7 @@ const MovieTile = ({ movieData, category }: MovieTileProps) => {
                     {movieData.title}
                 </h2>
             </div>
-        </Link>
+        </>
     );
 };
 

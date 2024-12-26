@@ -1,33 +1,6 @@
 import React from "react";
-import MovieTile from "../movie-tile/movie-tile";
 import Link from "next/link";
-//TODO:
-/*  To extend this task, you could:
-
-    //Add pagination
-    Implement search functionality
-    // Add movie details page using dynamic routes
-    Add client-side interactivity like favoriting movies
-    Implement filters by genre or release date
-
-    Genre List API
-    https://developer.themoviedb.org/reference/genre-movie-list
-
-    Add to watchlist
-    https://developer.themoviedb.org/reference/account-add-to-watchlist
-
-    Get watchlist
-    https://developer.themoviedb.org/reference/account-watchlist-movies
-
-    Recommendations
-    https://developer.themoviedb.org/reference/movie-recommendations
-    
-    Search movie
-    https://developer.themoviedb.org/reference/search-movie
-
-    WatchProviders
-    https://developer.themoviedb.org/reference/movie-watch-providers
-*/
+import MovieTile from "@/app/movie-tile/movie-tile";
 interface Movie {
     title: string;
     id: number;
@@ -44,12 +17,6 @@ interface MovieAPIResp {
     total_pages: number;
     total_result: number;
 }
-
-interface Props {
-    type: string;
-    page: number;
-}
-
 const getMovies = async (type: string, page: number) => {
     try {
         const api_key = process.env.NEXT_PUBLIC_API_KEY;
@@ -65,6 +32,7 @@ const getMovies = async (type: string, page: number) => {
         }
 
         const data = await res.json();
+
         return data;
     } catch (error) {
         console.log(error);
@@ -72,13 +40,14 @@ const getMovies = async (type: string, page: number) => {
     }
 };
 
-const Movies = async ({ type, page }: Props) => {
-    var currPage = page || 1;
-
-    const result = await getMovies(type, currPage);
+const CategoryPage = async ({ params }: { params: { category: string } }) => {
+    console.log(params.category);
+    const movieCategory = params.category;
+    const result = await getMovies(movieCategory, 1);
     const movieResp: MovieAPIResp = result;
     const movies: Movie[] = movieResp.results;
-    const typeUpper = type.toUpperCase().charAt(0) + type.slice(1);
+    const typeUpper =
+        movieCategory.toUpperCase().charAt(0) + movieCategory.slice(1);
     const category = typeUpper.split("_").join(" ");
 
     return (
@@ -91,10 +60,12 @@ const Movies = async ({ type, page }: Props) => {
                         key={movie.id}
                         className="rounded-lg shadow-lg overflow-hidden"
                     >
-                        <MovieTile
-                            movieData={movie}
-                            category={category}
-                        ></MovieTile>
+                        <Link href={`/movies/${movie.id}`}>
+                            <MovieTile
+                                movieData={movie}
+                                category={category}
+                            ></MovieTile>
+                        </Link>
                     </div>
                 ))}
             </div>
@@ -102,7 +73,7 @@ const Movies = async ({ type, page }: Props) => {
             <div className="flex justify-center">
                 <Link
                     className="px-10"
-                    href={`?type=${type}&page=${movieResp.page - 1}`}
+                    href={`?type=${movieCategory}&page=${movieResp.page - 1}`}
                 >
                     <button
                         className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -116,7 +87,7 @@ const Movies = async ({ type, page }: Props) => {
                 </span>
                 <Link
                     className="px-10"
-                    href={`?type=${type}&page=${movieResp.page + 1}`}
+                    href={`?type=${movieCategory}&page=${movieResp.page + 1}`}
                 >
                     <button
                         className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -130,4 +101,4 @@ const Movies = async ({ type, page }: Props) => {
     );
 };
 
-export default Movies;
+export default CategoryPage;

@@ -11,8 +11,7 @@ const getProviders = async (movie_id: number) => {
         },
     });
     const data = await resp.json();
-    console.log(data);
-    return data.results == null ? null : data.results.US;
+    return data.results.US == null ? null : data.results.US;
 };
 
 interface WatchProviders {
@@ -21,7 +20,19 @@ interface WatchProviders {
     provider_id: number;
     provider_name: string;
 }
-const WatchProviders = () => {
+
+interface Props {
+    movieId: number;
+}
+const WatchProviders = async ({ movieId }: Props) => {
+    const provider = await getProviders(movieId);
+    console.log(provider);
+    let data = [];
+    if (provider == null) data = [];
+    else if (provider.buy !== undefined) data = provider.buy;
+    else if (provider.flatrate !== undefined) data = provider.flatrate;
+
+    console.log(data);
     return <div>WatchProviders</div>;
 };
 

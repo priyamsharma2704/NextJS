@@ -1,4 +1,4 @@
-import Navbar from "../navbar";
+import Navbar from "../components/navbar";
 import WatchProviders from "../watch-providers/watch-providers";
 import Link from "next/link";
 
@@ -30,17 +30,15 @@ const getMovieById = async (id: number) => {
         },
     });
     const data = await resp.json();
-    //console.log(data);
     return data;
 };
 
 const MovieDetails = async ({ searchParams }: Props) => {
     const movieData: Movie = await getMovieById(searchParams.id);
-    console.log(movieData);
 
     return (
-        <div>
-            <Navbar></Navbar>
+        <>
+            {/* <Navbar></Navbar> */}
             <div className="grid grid-cols-2 gap-10">
                 <div>
                     <img
@@ -73,7 +71,9 @@ const MovieDetails = async ({ searchParams }: Props) => {
                     <br />
                     <div>
                         Where to watch:
-                        <WatchProviders></WatchProviders>
+                        <WatchProviders
+                            movieId={searchParams.id}
+                        ></WatchProviders>
                     </div>
                     <Link href="/">
                         <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -83,7 +83,7 @@ const MovieDetails = async ({ searchParams }: Props) => {
                 </div>
             </div>
             <div>Recommendations:</div>
-        </div>
+        </>
     );
 };
 
