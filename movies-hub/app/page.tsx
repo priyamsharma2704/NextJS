@@ -2,7 +2,6 @@
 /*  To extend this task, you could:
 
     //Add pagination
-    Implement search functionality
     // Add movie details page using dynamic routes
     Add client-side interactivity like favoriting movies
     Implement filters by genre or release date
@@ -16,15 +15,19 @@
     Get watchlist
     https://developer.themoviedb.org/reference/account-watchlist-movies
 
-    Recommendations
-    https://developer.themoviedb.org/reference/movie-recommendations
+    //Recommendations
+    //https://developer.themoviedb.org/reference/movie-recommendations
     
     Search movie
     https://developer.themoviedb.org/reference/search-movie
 
-    WatchProviders
-    https://developer.themoviedb.org/reference/movie-watch-providers
+    //WatchProviders
+    //https://developer.themoviedb.org/reference/movie-watch-providers
 */
 export default async function Home() {
-    return <>Select a category to view movies</>;
+    return (
+        <div className="flex justify-center text-3xl">
+            Select a category to view movies
+        </div>
+    );
 }
