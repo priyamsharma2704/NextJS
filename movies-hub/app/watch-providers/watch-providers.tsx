@@ -26,13 +26,12 @@ interface Props {
 }
 const WatchProviders = async ({ movieId }: Props) => {
     const provider = await getProviders(movieId);
-    console.log(provider);
     let data = [];
     if (provider == null) data = [];
     else if (provider.buy !== undefined) data = provider.buy;
     else if (provider.flatrate !== undefined) data = provider.flatrate;
 
-    console.log(data);
+    // console.log(data);
     return (
         <>
             <div className="flex pt-3">

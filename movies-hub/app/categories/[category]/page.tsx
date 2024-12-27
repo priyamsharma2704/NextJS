@@ -61,10 +61,7 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
                         className="rounded-lg shadow-lg overflow-hidden"
                     >
                         <Link href={`/movies/${movie.id}`}>
-                            <MovieTile
-                                movieData={movie}
-                                category={category}
-                            ></MovieTile>
+                            <MovieTile movieData={movie}></MovieTile>
                         </Link>
                     </div>
                 ))}

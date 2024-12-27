@@ -13,9 +13,8 @@ interface Movie {
 
 interface MovieTileProps {
     movieData: Movie;
-    category: string;
 }
-const MovieTile = ({ movieData, category }: MovieTileProps) => {
+const MovieTile = ({ movieData }: MovieTileProps) => {
     const movieId = movieData.id;
 
     return (
@@ -26,7 +25,7 @@ const MovieTile = ({ movieData, category }: MovieTileProps) => {
                 className="mr-auto ml-auto"
             ></img>
             <div className="p-4">
-                <h2 className="text-center text-xl font-semibold mb-2">
+                <h2 className="text-center text-lg font-semibold mb-2">
                     {movieData.title}
                 </h2>
             </div>

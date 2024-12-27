@@ -1,5 +1,6 @@
 import React from "react";
 import WatchProviders from "@/app/watch-providers/watch-providers";
+import Recommendations from "@/app/components/recommendations";
 interface Movie {
     title: string;
     id: number;
@@ -67,14 +68,15 @@ const MoviePage = async ({ params }: { params: { movieId: number } }) => {
                         <span className="text-lg">Available on:</span>
                         <WatchProviders movieId={movieId}></WatchProviders>
                     </div>
-                    {/* <Link href="/">
-                        <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Back
-                        </button>
-                    </Link> */}
                 </div>
             </div>
-            <div>Recommendations:</div>
+            <br />
+            <br />
+            <br />
+            <div>
+                <span className="pl-10 text-2xl">Recommendations:</span>
+                <Recommendations movie_id={movieId}></Recommendations>
+            </div>
         </>
     );
 };
