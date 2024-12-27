@@ -31,7 +31,7 @@ export default function Navbar() {
                             <div className="flex space-x-10">
                                 {categoriesArr.map((category) => (
                                     <Link
-                                        href={`/categories/${category.type}`}
+                                        href={`/categories/${category.type}/page/1`}
                                         key={category.type}
                                         className="text-lg whitespace-nowrap hover:text-blue-400 transition-colors px-2 py-1 rounded-md hover:bg-slate-800"
                                     >

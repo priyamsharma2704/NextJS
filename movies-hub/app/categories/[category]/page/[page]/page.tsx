@@ -40,10 +40,15 @@ const getMovies = async (type: string, page: number) => {
     }
 };
 
-const CategoryPage = async ({ params }: { params: { category: string } }) => {
-    console.log(params.category);
+const CategoryPage = async ({
+    params,
+}: {
+    params: { category: string; page: number };
+}) => {
     const movieCategory = params.category;
-    const result = await getMovies(movieCategory, 1);
+    const currPage = params.page ? params.page : 1;
+
+    const result = await getMovies(movieCategory, currPage);
     const movieResp: MovieAPIResp = result;
     const movies: Movie[] = movieResp.results;
     const typeUpper =
@@ -67,13 +72,15 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
                 ))}
             </div>
 
+            {/*----- PAGINATION -----*/}
             <div className="flex justify-center">
-                <Link
-                    className="px-10"
-                    href={`?type=${movieCategory}&page=${movieResp.page - 1}`}
-                >
+                <Link className="px-10" href={`${movieResp.page - 1}`}>
                     <button
-                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className={`bg-blue-950 text-white font-bold py-2 px-4 rounded ${
+                            movieResp.page === 1
+                                ? "bg-gray-500"
+                                : "bg-blue-950 hover:bg-blue-700"
+                        }`}
                         disabled={movieResp.page === 1}
                     >
                         Previous
@@ -82,12 +89,13 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
                 <span className="py-2">
                     Page {movieResp.page} of {movieResp.total_pages}
                 </span>
-                <Link
-                    className="px-10"
-                    href={`?type=${movieCategory}&page=${movieResp.page + 1}`}
-                >
+                <Link className="px-10" href={`${movieResp.page + 1}`}>
                     <button
-                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className={`bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                            movieResp.page === movieResp.total_pages
+                                ? "bg-gray-500"
+                                : "bg-blue-950 hover:bg-blue-700"
+                        }`}
                         disabled={movieResp.page === movieResp.total_pages}
                     >
                         Next

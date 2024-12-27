@@ -27,7 +27,6 @@ const getMovieById = async (id: number) => {
 };
 
 const MoviePage = async ({ params }: { params: { movieId: number } }) => {
-    console.log(params.movieId);
     const movieId = params.movieId;
     const movieData: Movie = await getMovieById(movieId);
     return (

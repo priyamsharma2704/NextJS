@@ -15,7 +15,6 @@ const getRecommendations = async (movie_id: number) => {
     const api = process.env.NEXT_PUBLIC_API_BEARER_KEY;
     const url = `https://api.themoviedb.org/3/movie/${movie_id}/recommendations`;
 
-    console.log(url);
     const resp = await fetch(url, {
         headers: {
             Authorization: `Bearer ${api}`,
@@ -27,7 +26,6 @@ const getRecommendations = async (movie_id: number) => {
 };
 const Recommendations = async ({ movie_id }: { movie_id: number }) => {
     const recommendations: Movie[] = await getRecommendations(movie_id);
-    console.log(recommendations);
     return (
         <div className="grid grid-cols-8 mb-10 mr-10 ml-10">
             {recommendations.slice(0, 8).map((movie) => (

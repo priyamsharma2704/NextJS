@@ -31,7 +31,6 @@ const WatchProviders = async ({ movieId }: Props) => {
     else if (provider.buy !== undefined) data = provider.buy;
     else if (provider.flatrate !== undefined) data = provider.flatrate;
 
-    // console.log(data);
     return (
         <>
             <div className="flex pt-3">
